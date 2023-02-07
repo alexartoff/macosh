@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% load bootstrap4 %}
+{% load static %}
+{% load i18n %}
+
+{% block content %}
+<div class="container wrapper flex-grow-1">
+    <h4 class="my-4 category">{{ category_title }}</h4>
+    <h5 class="my-4 category">{{ category_description }}</h5>
+
+    {% if experts_list %}
+    {% for expert in experts_list %}
+    {% if not expert.is_superuser %}
+    <div class="card mb-3">
+        <div class="card-body p-3 bg-light">
+            <div class="photo">
+                <img src="{{ expert.photo.url }}" width="150" height="150" alt="Expert Photo">
+                <h5>[⭐⭐⭐✭✩]</h5>
+            </div>
+            <div class="text">
+                <h3><a href="{% url 'show_expert' expert.slug %}">{{ expert.full_name }}</a></h3>
+                <p>{{ expert.about }}</p>
+                <a href="{% url 'show_expert' expert.slug %}" class="btn btn-info">Подробнее о эксперте</a>
+            </div>
+            <div class="skill">
+                <p>Специализация эксперта</p>
+                <ul>
+                    {% for skill in expert.skill.all %}
+                    <li>
+                        <p><strong>{{ skill.title }}</strong>: {{ skill.description }}</p>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+    {% endfor %}
+    {% endif %}
+
+</div>
+{% endblock content %}

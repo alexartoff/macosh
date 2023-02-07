@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% load bootstrap4 %}
+
+{% block content %}
+<div class="container wrapper flex-grow-1">
+    <table><tbody><tr><td style="text-align: center;">
+    {% for category in cat_list %}
+    <a href="{% url 'show_category' category.slug %}" class="cat">
+    <div class="card mb-5">
+        <div class="card-body p-4 bg-light index">
+            <img src="{{ category.image.url }}" width="150" height="150">
+            <h4>{{ category.name }}</h4>
+            <p>{{ category.description }}</p>
+            <div class="expert">
+                <p>Наши эксперты:</p>
+                <ul>
+                    {% for expert in category.expert.all %}
+                    <li>{{ expert }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+    </a>
+    {% endfor %}
+    </td></tr></tbody></table>
+</div>
+{% endblock content %}
